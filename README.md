@@ -23,7 +23,7 @@ After reviewing various SOTA LLMs, we found the latest Chronos, a pretrained tim
 
 Determining the optimal number of past prices for forecasting is crucial. We tested rolling look-back windows from 10 to 1000 to predict the next-day price movement for the final 10, 20, 30, 40, and 50 Close price instances. For example, using a 300-day window means each prediction is based on the previous 300 prices. 
 
-Our analysis revealed that a 400-day look-back window consistently yielded the highest accuracy across all instance sizes. The plot below illustrates this with the final 20 instances, where correct predictions peak at a window size of 400.
+Our analysis revealed that a 400-day look-back window consistently yielded the highest accuracy across all instance sizes. The plot below illustrates this with the final 20 instances, where correct predictions peak (15) at a window size of 400.
 
 ![](./look_back_window/close_forward1_smp100_hit_countof20.png)
 
