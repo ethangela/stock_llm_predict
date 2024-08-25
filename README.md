@@ -2,16 +2,16 @@
 
 ## 0. Introduction
 
-This assignment focuses on leveraging LLMs for SPX index's Close price time series forecasting. We introduce everythin in two sections:
+This assignment focuses on leveraging LLMs for SPX index's `Close` price time series forecasting. We introduce everythin in two sections:
 
 1. **Zero-shot LLM: We directly try forecasting with LLM in a zero-shot fashion**
    - The LLM is applied directly to predict unseen SPX data without prior training on such stock prices.
-   - We input the sequence of historical Close prices and output the forecasted Close price.
+   - We input the sequence of historical `Close` prices and output the forecasted `Close` price.
 
 2. **LLM + LSTM: We use LLM-generated sequence for feature engineering and build a model for forecasting**
-   - First, generate forecast sequences for Open, High, and Low (OHL) prices using the LLM.
-   - Then, build and select the top 100 features from historical OHL prices, and similarly build the corresponding top 100 features for forecasted OHL prices.
-   - Finally, these features are used to train an LSTM model for predicting the directional movement of the Close price.
+   - First, generate forecast sequences for `Open`, `High`, and `Low` (`OHL`) prices using the LLM.
+   - Then, build and select the top 100 features from historical `OHL` prices, and similarly build the corresponding top 100 features for forecasted `OHL` prices.
+   - Finally, these features are used to train an LSTM model for predicting the directional movement of the `Close` price.
 
 ## 1. Zero-shot LLM
 
@@ -29,10 +29,26 @@ Our analysis revealed that a 400-day look-back window consistently yielded the h
 
 Other plots can be found at `./look_back_window`. In the following tasks, we stick to window size 400.
 
-### 3) The right foreward window 
+### 3) The right forward window 
 
+Determining the optimal number of future prices to forecast based on a fixed number of past prices is equally important. Our analysis showed that predicting just one day ahead provides the most accurate results, while longer forecasts tend to deviate significantly from the actual values.
+
+For multi-day forecasts, we recommend a step-by-step approach: first, predict the next day, then use that prediction as the basis for the following day, rolling the look-back window forward for each subsequent day.
+
+Below are examples of one-day (top) and two-day (bottom) forward predictions:
+
+![](./look_forward_window/2test_spx_step1_test.png)
+
+![](./look_forward_window/2test_spx_step2_test.png)
+
+Other forward windows can be found at `./look_forward_window`.
 
 ### 4) The results
+
+Using a fixed look-back window of `400` and a forward window of `1`, we input the `Close` price movement into the Chronos LLM and obtained predictions for the next four days.
+
+The actual `Close` prices along with the predicted prices for the next four days are 4769.83, 4742.83, 4704.81, 4688.68, and 4697.24, resulting in the following next four-day `Close` price movements: `down`, `down`, `down`, and `up`.
+
 
 ## 2. LLM + LSTM
 
