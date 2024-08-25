@@ -25,7 +25,7 @@ Given historical stock price data, a critical question is determining how many p
 
 For example, when predicting the next-day price movement for the final 10 instances of the Close price, if we choose a window size of 300, the prediction for the next-day movement of each instance is based on its previous 300 prices.
 
-After plotting the number of correct movement predictions against the size of the look-back window, we found that a look-back window size of 400 consistently led to the highest number of correct predictions across all instance sizes. An example of the prediction for the final 20 instances of the Close price is shown below, where when the window size is around 400, movement predictions for 15 out of 20 instances are correct.
+After plotting the number of correct movement predictions against the size of the look-back window, we found that a look-back window size of 400 consistently led to the highest number of correct predictions across all instance sizes. An example with 20 instances is shown below, where correct movement predictions peak at the window size 400.
 
 ![](./look_back_window/close_forward1_smp100_hit_countof20.png)
 
