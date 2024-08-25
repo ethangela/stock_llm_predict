@@ -18,16 +18,20 @@ This assignment focuses on leveraging LLMs for SPX index's Close price time seri
 ### 1) The right model 
 We utilize techniques from the ICDAR 2023 paper, `LineFormer - Rethinking Chart Data Extraction as Instance Segmentation`, to extract line data through instance segmentation. The code is adapted from [LineFormer](https://github.com/TheJaeLal/LineFormer), and we use their pre-trained model directly for this task.
 
-### 2) The right backward window
+### 2) The right look-back window
 
-![Project Screenshot](./images/screenshot.png)
-Coordinates and replots of all 6 tickers can be found at `./chart_extract_raw_output`.
+Given historical stock price data, a critical question is determining how many past prices to use for forecasting future prices. We conducted a test to predict the next-day price movement for the final 10, 20, 30, 40, and 50 instances of the Close price. In this test, we used look-back windows ranging from 10 to 1000. 
+
+For example, when predicting the next-day price movement for the final 10 instances of the Close price, if we choose a window size of 300, the prediction for the next-day movement of each instance is based on its previous 300 prices.
+
+After plotting the number of correct movement predictions against the size of the look-back window, we found that a look-back window size of 400 consistently led to the highest number of correct predictions across all instance sizes. An example of the prediction for the final 20 instances of the Close price is shown below, where when the window size is around 400, movement predictions for 15 out of 20 instances are correct.
+
+![](./look_back_window/close_forward1_smp100_hit_countof20.png.png)
+
+Other plots can be found at `./look_back_window`.
 
 ### 3) The right foreward window 
 
-The extracted coordinates of the k-line, EMA, and WMA lines for each ticker may vary in length, which we need to address before calculating similarity. For example, when calculating the Pearson correlation between two lines, they must have the same length. The details of the lengths of the k-line, EMA, and WMA lines for each ticker can be found in `./length.txt`.
-
-First, we observed significant fluctuations in the lengths of the EMA lines, so we excluded EMA lines from the similarity analysis. Next, we found that, except for `k_line_1` (the extracted k-line for ticker 1), all other k-lines have a similar number of coordinates. All wma-lines also have a similar number of coordinates. We manually identified that the existence of some sparse points in `k_line_1` results such lower number of coordinates. Consdiering this, whenever dealing with `k_line_1`, we use interpolation to increase its length. An example of this interpolation is shown below:
 
 ### 4) The results
 
