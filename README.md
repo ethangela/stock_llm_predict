@@ -16,7 +16,8 @@ This assignment focuses on leveraging LLMs for SPX index's Close price time seri
 ## 1. Zero-shot LLM
 
 ### 1) The right model 
-We utilize techniques from the ICDAR 2023 paper, `LineFormer - Rethinking Chart Data Extraction as Instance Segmentation`, to extract line data through instance segmentation. The code is adapted from [LineFormer](https://github.com/TheJaeLal/LineFormer), and we use their pre-trained model directly for this task.
+
+After reviewing various SOTA LLMs, we found the latest Chronos, a pretrained time series forecasting model, generates the most remarkable zero-shot performance [Performance](https://github.com/amazon-science/chronos-forecasting). We therefore use Chronos as the backbone for all tasks below, where for each prediction we generate 100 samples and use the median as the output. 
 
 ### 2) The right look-back window
 
@@ -26,7 +27,7 @@ For example, when predicting the next-day price movement for the final 10 instan
 
 After plotting the number of correct movement predictions against the size of the look-back window, we found that a look-back window size of 400 consistently led to the highest number of correct predictions across all instance sizes. An example of the prediction for the final 20 instances of the Close price is shown below, where when the window size is around 400, movement predictions for 15 out of 20 instances are correct.
 
-![](./look_back_window/close_forward1_smp100_hit_countof20.png.png)
+![](./look_back_window/close_forward1_smp100_hit_countof20.png)
 
 Other plots can be found at `./look_back_window`.
 
