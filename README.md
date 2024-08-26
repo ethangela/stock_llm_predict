@@ -16,7 +16,7 @@ This assignment focuses on leveraging LLMs for SPX index's `Close` price time se
 
 ## 1. Zero-shot LLM (`chronos_various_test.py` and `chronos_main.py`)
 
-### 1) The right model 
+#### 1) The right model 
 
 After reviewing various SOTA LLMs, we found the latest [Chronos](https://github.com/amazon-science/chronos-forecasting), a pretrained time series forecasting model, generates the most remarkable zero-shot performance. We therefore use Chronos as the backbone for all tasks below, where for each prediction we generate 100 samples and use the median as the output. 
 
