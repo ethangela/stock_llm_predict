@@ -2,16 +2,17 @@
 
 ## 0. Introduction
 
-This assignment focuses on leveraging LLMs for SPX index's `Close` price time series forecasting. We introduce everythin in two sections:
+This assignment focuses on leveraging LLMs for SPX index's `Close` price time series forecasting. We introduce everything in two sections:
 
 1. **Zero-shot LLM: We directly try forecasting with LLM in a zero-shot fashion**
    - The LLM is applied directly to predict unseen SPX data without prior training on such stock prices.
    - We input the sequence of historical `Close` prices and output the forecasted `Close` price.
 
 2. **LLM + LSTM: Feature Engineering with LLM and Forecasting with LSTM**
-   - First, generate and select the top 100 features from historical `OHLC` prices.
-   - Then, train an LSTM model on historical data using these features to predict the directional movement of the `Close` price.
-   - Finally: utilize the LLM to forecast the top 100 features for the upcoming days and apply the trained LSTM model to predict the directional movement of the `Close` price for those days.
+   - First, generate and select the top 100 features derived from historical `OHLC` prices.
+   - Then, using historical data, train an LSTM model with these features to predict the directional movement of the historical `Close` price.
+   - Finally: utilize the LLM to forecast the top 100 features for the upcoming days and apply the trained LSTM model to predict the directional movement of the `Close` price for those future days.
+
 
 ## 1. Zero-shot LLM (`chronos_various_test.py` and `chronos_main.py`)
 
