@@ -86,7 +86,11 @@ We selected the top 100 features, and their names are listed in `./lstm/top100.t
 
 With 100 features selected, we built an LSTM model to predict the directional movement of the `Close` price using historical data. Due to the limited dataset size (3720 days), we opted for a simple network structure with few layers.
 
-We split the historical data into training and testing sets. After 20 epochs of training, the model achieved an accuracy of 66.15% on the test set. We anticipate that accuracy could improve with additional data in the future (e.g., hourly `OHLC`) and more complex models (e.g., Transformers).
+We split the historical data into training and testing sets. After 20 epochs of training, the model achieved an accuracy of 56.15% on the test set. We anticipate that accuracy could improve substantially with additional data (e.g., hourly `OHLC`) in the future and more complex models (e.g., Transformers). 
+
+In addition, even with LSTM, it is pointed that `Mid` pirce, (`Close`+`Open`)/2, is better than `Close` to be predicted with [accuracy](https://discovery.ucl.ac.uk/id/eprint/10155501/2/AndrewDMannPhDFinal.pdf) pontetialy as high as 74.48%. This is because `Mid` pirce is more stable (lower std ) than `Close`.
+
+In addition, even when using LSTM models, it's been noted that the `Mid` price, calculated as (`Close`+`Open`)/2, is often a better target for prediction than the Close price. [Research](https://discovery.ucl.ac.uk/id/eprint/10155501/2/AndrewDMannPhDFinal.pdf) suggests that the accuracy of predicting the `Mid` price can potentially be as high as 74.48% due to its lower standard deviation compared to the `Close` price.
 
 
 #### 4) Use LLM to generate next-day features
