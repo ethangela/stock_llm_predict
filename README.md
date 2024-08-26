@@ -4,7 +4,7 @@
 
 ## 0. Introduction
 
-This assignment focuses on leveraging LLMs for SPX index's `Close` price time series forecasting. We introduce everything in two sections:
+This assignment focuses on leveraging LLMs for SPX index's `Close` price time series forecasting. We use two approahces and introduce them in two sections separately:
 
 1. **Zero-shot LLM: We directly try forecasting with LLM in a zero-shot fashion**
    - The LLM is applied directly to predict unseen SPX data without prior training on such stock prices.
