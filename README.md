@@ -108,7 +108,7 @@ Finally, using features generated from the LLM and the trained LSTM model, we pr
 
 
 ## 3. Notes after assignment3
-In this project, given the limited data and time constraints, I combined zero-shot LLM with `OHLC` factor mining in this project. While `OHLC` factor mining is valuable for exploring interactions between `Close` and `OHL` prices, it's not the only approach. In addition, I found that zero-shot LLMs like LLMTime and Chronos are not yet reliable for stock price prediction. 
+In this project, given the limited data and time constraints, I combined zero-shot LLM with `OHLC` factor mining. While `OHLC` factor mining is valuable for exploring interactions between `Close` and `OHL` prices, it's not the only approach. In addition, I found that zero-shot LLMs like LLMTime and Chronos are not yet reliable for stock price prediction. 
 
 A more effective approach would be to train models ourselves.
 
