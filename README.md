@@ -110,7 +110,7 @@ Finally, using features generated from the LLM and the trained LSTM model, we pr
 ## 3. Notes after assignment3
 In this project, given the limited data and time constraints, I combined zero-shot LLM with `OHLC` factor mining. While `OHLC` factor mining is valuable for exploring interactions between `Close` and `OHL` prices, it's not the only approach. In addition, I found that zero-shot LLMs like LLMTime and Chronos are not yet reliable for stock price prediction. 
 
-A more effective approach would be to train models ourselves.
+A more effective approach would be to train Transformers models ourselves.
 
 Potential directions include:
    - Multivariate time seris model: Train a model using `OHLC` and/or other variates (say in total `N` variates) as inputs with `T` time steps and `N` variates to predict future sequence with `S` time steps and `N` variates. This approach fully explores correlations between variables, offering more specific and reliable predictions. Quite a lot [SOTA](https://github.com/ddz16/TSFpaper/tree/main?tab=readme-ov-file) works are doing in this way. If only `Close` predictions are needed, we can extract the coresponding one from `N` predicted variates.
