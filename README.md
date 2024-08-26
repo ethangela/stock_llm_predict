@@ -19,12 +19,12 @@ This assignment focuses on leveraging LLMs for SPX index's `Close` price time se
 
 ## 1. Zero-shot LLM (`chronos_various_test.py` and `chronos_main.py`)
 
-#### 1) The right model 
+### 1) The right model 
 
 After reviewing various SOTA LLMs, we found the latest [Chronos](https://github.com/amazon-science/chronos-forecasting), a pretrained time series forecasting model, generates the most remarkable zero-shot performance. We therefore use Chronos as the backbone for all tasks below, where for each prediction we generate 100 samples and use the median as the output. 
 
 
-#### 2) The right rolling look-back window
+### 2) The right rolling look-back window
 
 Determining the optimal number of past prices for future price forecasting is crucial. We tested the size of rolling look-back windows from 10 to 1000, e.g., using a 300-day window means each prediction is based on the previous 300 prices. 
 
@@ -37,7 +37,7 @@ Our analysis revealed that a 400-day look-back window consistently yielded the h
 Other plots can be found at `./look_back_window`. In the following tasks, we stick to look-back window with size 400.
 
 
-#### 3) The right forward window 
+### 3) The right forward window 
 
 Determining the optimal number of future prices to forecast based on a fixed number of past prices is equally important. Our analysis showed that predicting just one day ahead provides the most proper results, while longer forecasts tend to deviate significantly from the actual values.
 
@@ -52,7 +52,7 @@ Other forward windows can be found at `./look_forward_window`.
 Nevertheless, we can still do multi-day forecasts using a step-by-step approach: first, predict the next day, then use that prediction as the basis for the following day, rolling the look-back window forward for each subsequent day.
 
 
-#### 4) The results for next four days
+### 4) The results for next four days
 
 Using a fixed look-back window of `400` and a forward window of `1`, we input the `Close` price movement into the Chronos LLM and obtained predictions for the next four days.
 
@@ -63,7 +63,7 @@ The actual `Close` prices on the last given day along with the predicted prices 
 
 ## 2. LLM + LSTM (`feature.py` and `predict.py`)
 
-#### 1) Features from `OHLC`
+### 1) Features from `OHLC`
 
 Inspired by a 2021 PhD [thesis](https://discovery.ucl.ac.uk/id/eprint/10155501/2/AndrewDMannPhDFinal.pdf), we mine features from `OHLC` using all possible combinations of differences, ratios, and pairwise operations of daily `OHLC` data with L lags. Specifically:
    - Lags (L): Refers to the number of days considered, e.g., L=2 includes today (0) and yesterday (1).
@@ -72,7 +72,7 @@ Inspired by a 2021 PhD [thesis](https://discovery.ucl.ac.uk/id/eprint/10155501/2
    - Pairwise Operations: Operations (both differences and ratios) between features derived from Differences and Ratios, e.g., `(Close0 - Low1) / (Low0 / Low1)`.
 
 
-#### 2) Rank and select the top 100 features
+### 2) Rank and select the top 100 features
 We set L=2 and generated over 800 features. XGBoost is then employed to rank each feature's importance with respect to predicting the next-day `Close` price directional change, using the total gain metric.
 
 The importance curve is illustrated below:
@@ -82,7 +82,7 @@ The importance curve is illustrated below:
 We selected the top 100 features, and their names are listed in `./lstm/top100.txt.`
 
 
-#### 3) Build LSTM model
+### 3) Build LSTM model
 
 With 100 features selected, we built an LSTM model to predict the directional movement of the `Close` price using historical data. Due to the limited dataset size (3720 days), we opted for a simple network structure with few layers.
 
@@ -91,7 +91,7 @@ We split the historical data into training and testing sets. After 20 epochs of 
 In addition, even when using LSTM models, it's been noted that the `Mid` price, calculated as (`Close`+`Open`)/2, is often a better target for prediction than the Close price. [Research](https://discovery.ucl.ac.uk/id/eprint/10155501/2/AndrewDMannPhDFinal.pdf) suggests that the accuracy of predicting the `Mid` price can potentially be as high as 74.48% due to its lower standard deviation compared to the `Close` price.
 
 
-#### 4) Use LLM to generate next-day features
+### 4) Use LLM to generate next-day features
 
 We now have sequences of 100 features for all historical data. Each sequence can be input into the LLM to predict values for the next few days, using the same LLM backbone, look-back window, and forward window as described previously.
 
@@ -99,7 +99,7 @@ An example of the performance of LLM in predicting next-day feature ((Open0-Low1
 
 ![](./feature/pre400_window20_forward1_smp100_hit11_feature_rank_1.png)
 
-#### 5) The results for next four days
+### 5) The results for next four days
 
 Finally, using features generated from the LLM and the trained LSTM model, we predict the next four days of `Close` price movements as: `down`, `down`, `up`, and `up`.
 
