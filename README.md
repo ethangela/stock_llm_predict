@@ -79,7 +79,7 @@ We split the historical data into training and testing sets. After 20 epochs of 
 
 We now have sequences of 100 features for all historical data. Each sequence can be input into the LLM to predict values for the next few days, using the same model, look-back window, and forward window as described previously.
 
-An example of the performance of LLM in predicting next-day feature is shown below:
+An example of the performance of LLM in predicting next-day feature ((Open0-Low1)/(High0-Close1)) is shown below:
 
 ![](./feature/pre400_window20_forward1_smp100_hit11_feature_rank_1.png)
 
