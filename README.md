@@ -61,7 +61,7 @@ Inspired by a 2021 PhD [thesis](https://discovery.ucl.ac.uk/id/eprint/10155501/2
    - Pairwise Operations: Operations (both differences and ratios) between features derived from Differences and Ratios, e.g., `(close0 - low1) / (low0 / low1)`.
 
 ### 2) Rank and select the top 100 features
-We set L=2 and generated over 1000 features. XGBoost was employed to rank each feature's importance with respect to predicting the next-day `Close` price directional change, using the total gain metric.
+We set L=2 and generated over 800 features. XGBoost was employed to rank each feature's importance with respect to predicting the next-day `Close` price directional change, using the total gain metric.
 
 The importance curve is illustrated below:
 
@@ -69,6 +69,18 @@ The importance curve is illustrated below:
 
 We selected the top 100 features, and their names are listed in `./lstm/top100.txt.`
 
-### 3) Build LSTM model and use LLM for next-day feature generation
+### 3) Build LSTM model
+
+With 100 features selected, we build a LSTM model to predict the directional movement of the `Close` price on historical data. Given the limited size of historical data (3720 days in total), we avoid complex network structure or multi layers, and the detials of network structure can be found in `predict.py`.
+
+We break the historcial data into train and test set, after 20 epoches of training on train data, the predcition accuracy on test set is 66.15%. We note that this accuracy has potential to improve with more data in the future and more complexed models (i.e., Transformer). 
+
+With 100 features selected, we built an LSTM model to predict the directional movement of the `Close` price using historical data. Due to the limited dataset size (3720 days), we opted for a simple network structure with few layers. Details of the network architecture are provided in `predict.py`.
+
+We split the historical data into training and testing sets. After 20 epochs of training, the model achieved an accuracy of 66.15% on the test set. We anticipate that accuracy could improve with additional data in the future and more complex models, such as Transformers.
+
+### 4) Use LLM to generate next-day features
+
+
 
 ### 4) The results for next four days
