@@ -47,15 +47,15 @@ Other forward windows can be found at `./look_forward_window`.
 
 Using a fixed look-back window of `400` and a forward window of `1`, we input the `Close` price movement into the Chronos LLM and obtained predictions for the next four days.
 
-The actual `Close` prices along with the predicted prices for the next four days are 4769.83, 4742.83, 4704.81, 4688.68, and 4697.24, resulting in the following next four-day `Close` price movements: `down`, `down`, `down`, and `up`.
+The actual `Close` prices along with the predicted prices for the next four days are 4769.83, 4772.49, 4774.26, 4776.10, and 4778.05, resulting in the following next four-day `Close` price movements: `up`, `up`, `up`, and `up`.
 
 
-## 2. LLM + LSTM
+## 2. LLM + LSTM (`feature.py` and `predict.py`)
 
 ### 1) Features from `OHLC`
 
 Inspired by a 2021 PhD [thesis](https://discovery.ucl.ac.uk/id/eprint/10155501/2/AndrewDMannPhDFinal.pdf), we mine features from `OHLC` using all possible combinations of differences, ratios, and pairwise operations of daily `OHLC` data with L lags. Specifically:
-   - Lags (L): Refers to the number of days considered, e.g., L=2 includes today and yesterday.
+   - Lags (L): Refers to the number of days considered, e.g., L=2 includes today (0) and yesterday (1).
    - Differences: Calculations of differences between `OHLC` values at various lags, e.g., `close0 - low1`.
    - Ratios: Ratios of `OHLC` values at different lags, e.g., `low0 / low1`.
    - Pairwise Operations: Operations (both differences and ratios) between features derived from Differences and Ratios, e.g., `(close0 - low1) / (low0 / low1)`.
@@ -71,16 +71,20 @@ We selected the top 100 features, and their names are listed in `./lstm/top100.t
 
 ### 3) Build LSTM model
 
-With 100 features selected, we build a LSTM model to predict the directional movement of the `Close` price on historical data. Given the limited size of historical data (3720 days in total), we avoid complex network structure or multi layers, and the detials of network structure can be found in `predict.py`.
-
-We break the historcial data into train and test set, after 20 epoches of training on train data, the predcition accuracy on test set is 66.15%. We note that this accuracy has potential to improve with more data in the future and more complexed models (i.e., Transformer). 
-
-With 100 features selected, we built an LSTM model to predict the directional movement of the `Close` price using historical data. Due to the limited dataset size (3720 days), we opted for a simple network structure with few layers. Details of the network architecture are provided in `predict.py`.
+With 100 features selected, we built an LSTM model to predict the directional movement of the `Close` price using historical data. Due to the limited dataset size (3720 days), we opted for a simple network structure with few layers.
 
 We split the historical data into training and testing sets. After 20 epochs of training, the model achieved an accuracy of 66.15% on the test set. We anticipate that accuracy could improve with additional data in the future and more complex models, such as Transformers.
 
 ### 4) Use LLM to generate next-day features
 
+Now we have the sequence of 100 features for all historcail data, we can also input each sequence of them into LLM to predcit the value of next few days, using the exact model, look-back window, and forward window introduced above. 
 
+With this new features, we can fit into the trained-LSTM to predcit the future `Close` price movement. 
+
+We now have sequences of 100 features for all historical data. Each sequence can be input into the LLM to predict values for the next few days, using the same model, look-back window, and forward window as described previously.
+
+These new features can then be used to predict future `Close` price movements with the trained LSTM model.
 
 ### 4) The results for next four days
+
+Finally, using features generated from the LLM and the trained LSTM model, we predict the next four days of `Close` price movements as: `down`, `down`, `up`, and `up`.
