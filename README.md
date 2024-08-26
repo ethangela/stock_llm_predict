@@ -77,13 +77,11 @@ We split the historical data into training and testing sets. After 20 epochs of 
 
 ### 4) Use LLM to generate next-day features
 
-Now we have the sequence of 100 features for all historcail data, we can also input each sequence of them into LLM to predcit the value of next few days, using the exact model, look-back window, and forward window introduced above. 
-
-With this new features, we can fit into the trained-LSTM to predcit the future `Close` price movement. 
-
 We now have sequences of 100 features for all historical data. Each sequence can be input into the LLM to predict values for the next few days, using the same model, look-back window, and forward window as described previously.
 
-These new features can then be used to predict future `Close` price movements with the trained LSTM model.
+An example of the performance of LLM in predicting next-day feature is shown below:
+
+![](./features/pre400_window20_forward1_smp100_hit11_feature_rank_1.png)
 
 ### 4) The results for next four days
 
