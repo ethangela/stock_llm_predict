@@ -13,7 +13,7 @@ This assignment focuses on leveraging LLMs for SPX index's `Close` price time se
    - Then, train an LSTM model on historical data using these features to predict the directional movement of the `Close` price.
    - Finally: utilize the LLM to forecast the top 100 features for the upcoming days and apply the trained LSTM model to predict the directional movement of the `Close` price for those days.
 
-## 1. Zero-shot LLM
+## 1. Zero-shot LLM (`chronos_various_test.py` and `chronos_main.py`)
 
 ### 1) The right model 
 
@@ -81,7 +81,7 @@ We now have sequences of 100 features for all historical data. Each sequence can
 
 An example of the performance of LLM in predicting next-day feature is shown below:
 
-![](./features/pre400_window20_forward1_smp100_hit11_feature_rank_1.png)
+![](./feature/pre400_window20_forward1_smp100_hit11_feature_rank_1.png)
 
 ### 4) The results for next four days
 
