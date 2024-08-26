@@ -54,23 +54,20 @@ The actual `Close` prices along with the predicted prices for the next four days
 
 ### 1) Features from `OHLC`
 
-Inspired by a PhD thesis published in 2021, `OHLC` factors can be mined by all possible combinations of differences, ratios, and pairwise operations of daily `OHLC` data given L lags. Specifically,
-   - L: the day lag, e.g., L=2 means consider prices in 2 days (today and yesterday).
-   - Differences: differences between OHL values with different lags, e.g., close0-low1
-   - Ratios: ratios between OHLC values with different lags. e.g., low0/low1.
-   - Pairwise operations: pairwise operations (difference and ratio) between the features obtained from the Differences and Ratios, e.g., (close0-low1) / (low0/low1).
-
-
 Inspired by a 2021 PhD [thesis](https://discovery.ucl.ac.uk/id/eprint/10155501/2/AndrewDMannPhDFinal.pdf), we mine features from `OHLC` using all possible combinations of differences, ratios, and pairwise operations of daily `OHLC` data with L lags. Specifically:
-   - **Lags (L)**: Refers to the number of days considered, e.g., L=2 includes today and yesterday.
-   - **Differences**: Calculations of differences between `OHLC` values at various lags, e.g., `close0 - low1`.
-   - **Ratios**: Ratios of `OHLC` values at different lags, e.g., `low0 / low1`.
-   - **Pairwise Operations**: Operations (both differences and ratios) between features derived from Differences and Ratios, e.g., `(close0 - low1) / (low0 / low1)`.
-
+   - Lags (L): Refers to the number of days considered, e.g., L=2 includes today and yesterday.
+   - Differences: Calculations of differences between `OHLC` values at various lags, e.g., `close0 - low1`.
+   - Ratios: Ratios of `OHLC` values at different lags, e.g., `low0 / low1`.
+   - Pairwise Operations: Operations (both differences and ratios) between features derived from Differences and Ratios, e.g., `(close0 - low1) / (low0 / low1)`.
 
 ### 2) Rank and select the top 100 features
+We set L=2 and generated over 1000 features. XGBoost was employed to rank each feature's importance with respect to predicting the next-day `Close` price directional change, using the total gain metric.
 
-Here we select L=2, and there are nealy 1000 features from the step above, we 
+The importance curve is illustrated below:
+
+![](./lstm/importance.png)
+
+We selected the top 100 features, and their names are listed in `./lstm/top100.txt.`
 
 ### 3) Build LSTM model and use LLM for next-day feature generation
 
