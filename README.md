@@ -86,9 +86,11 @@ We selected the top 100 features, and their names are listed in `./lstm/top100.t
 
 With 100 features selected, we built an LSTM model to predict the directional movement of the `Close` price using historical data. Due to the limited dataset size (3720 days), we opted for a simple network structure with few layers.
 
-We split the historical data into training and testing sets. After 20 epochs of training, the model achieved an accuracy of 56.15% on the test set. We anticipate that accuracy could improve substantially with additional data (e.g., hourly `OHLC`) in the future and more complex models (e.g., Transformers). 
+We split historical data into training / validation / testing set with ratio 0.8 / 0.1 / 0.1, the validation set is used to fine-tune three hyper-parameters: backward window, number of layers, and hidden size. After fine-tuning, the best Hyperparameters are backward window: 4, num of layers: 3, hidden size: 50.
 
-In addition, even when using LSTM models, it's been noted that the `Mid` price, calculated as (`Close`+`Open`)/2, is often a better target for prediction than the Close price. [Research](https://discovery.ucl.ac.uk/id/eprint/10155501/2/AndrewDMannPhDFinal.pdf) suggests that the accuracy of predicting the `Mid` price can potentially be as high as 74.48% due to its lower standard deviation compared to the `Close` price.
+With fine-tuned hyper-parameters, we perform 20 epochs of training, and select the best model according to validation loss, use this model and achieve an accuracy of 56.15% on the test set. We anticipate that accuracy could improve substantially with additional data (e.g., hourly `OHLC`) in the future and more complex models (e.g., Transformers). 
+
+(In addition, even when using LSTM models, it's been noted that the `Mid` price, calculated as (`Close`+`Open`)/2, is often a better target for prediction than the Close price. [Research](https://discovery.ucl.ac.uk/id/eprint/10155501/2/AndrewDMannPhDFinal.pdf) suggests that the accuracy of predicting the `Mid` price can potentially be as high as 74.48% due to its lower standard deviation compared to the `Close` price.)
 
 
 ### 4) Use LLM to generate next-day features
@@ -101,7 +103,7 @@ An example of the performance of LLM in predicting next-day feature ((Open0-Low1
 
 ### 5) The results for next four days
 
-Finally, using features generated from the LLM and the trained LSTM model, we predict the next four days of `Close` price movements as: `down`, `down`, `up`, and `up`.
+Finally, using features generated from the LLM and the trained LSTM model, we predict the next four days of `Close` price movements as: `down`, `up`, `up`, and `up`.
 
 
 
