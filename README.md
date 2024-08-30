@@ -59,6 +59,12 @@ Using a fixed look-back window of `400` and a forward window of `1`, we input th
 The actual `Close` prices on the last given day along with the predicted prices for the next four days are 4769.83, 4772.49, 4774.26, 4776.10, and 4778.05, resulting in the next four-day `Close` price movements as: `up`, `up`, `up`, and `up`.
 
 
+### 5) potential range adjustment of predicted `Close` price (depreciated)
+Historical dataset suggests that,
+- when `Close` at previous day >= `Open` at previous day, 1558 out of 2030 (76.7%) `Close` at current day >= `Open` at previous day.
+- when `Close` at previous day < `Open` at previous day, 1124 out of 1691 (66.4%) `Close` at current day < `Open` at previous day.
+
+
 
 
 ## 2. LLM + LSTM (`feature.py` and `predict.py`)
